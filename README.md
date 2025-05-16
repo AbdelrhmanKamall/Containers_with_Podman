@@ -1,8 +1,8 @@
-# WordPress Multi-Site Environment with Podman
-
-This Compose file sets up a **multi-container WordPress environment** using **Podman**, with secure handling of sensitive data through **Podman Secrets**.  
-They're 2 wordpress conainers that are sharing the same database container
+# WordPress Multi-Site Environment with Podman  
 ---
+
+This Compose file defines a multi-container environment using Podman to deploy two separate WordPress websites (wordpress1 and wordpress2) that share a common mysql database (dbserver). Each WordPress site uses a different database table prefix to isolate its data within the shared database. Sensitive credentials like database passwords are securely managed using Podman Secrets, and all containers communicate over a private network appnet. This setup ensures secure, efficient, and persistent deployment of multiple independent WordPress sites on a single infrastructure.
+
 
 ## Setup Overview
 
