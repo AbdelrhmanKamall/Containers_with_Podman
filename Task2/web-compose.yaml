@@ -1,0 +1,49 @@
+services:
+  wordpress1:
+    image: wordpress:latest
+    container_name: wordpress1
+    environment:
+      WORDPRESS_DB_HOST: host.containers.internal
+      WORDPRESS_DB_PORT: 3307
+      WORDPRESS_DB_USER_FILE: /run/secrets/db_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+      WORDPRESS_DB_NAME: db
+      WORDPRESS_TABLE_PREFIX: wp_1
+    ports:
+      - "${WORDPRESS1_PORT}:80"
+    networks:
+      - appnet
+    depends_on:
+      - dbserver
+    secrets:
+      - db_user
+      - db_password
+
+  wordpress2:
+    image: wordpress:latest
+    container_name: wordpress2
+    environment:
+      WORDPRESS_DB_HOST: host.containers.internal
+      WORDPRESS_DB_PORT: 3307
+      WORDPRESS_DB_USER_FILE: /run/secrets/db_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+      WORDPRESS_DB_NAME: db
+      WORDPRESS_TABLE_PREFIX: wp_2
+    ports:
+      - "${WORDPRESS2_PORT}:80"
+    networks:
+      - appnet
+    depends_on:
+      - dbserver
+    secrets:
+      - db_user
+      - db_password
+
+  mysql-proxy:
+    image: nginx
+    container_name: mysql-proxy
+    volumes:
+      - ./reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "3307:3307"
+    restart: always

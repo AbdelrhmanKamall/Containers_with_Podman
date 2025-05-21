@@ -1,0 +1,26 @@
+services:
+  dbserver:
+    image: mysql:5.7
+    container_name: dbserver
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_DATABASE: db
+      MYSQL_USER_FILE: /run/secrets/db_user
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    volumes:
+      - dbdata:/var/lib/mysql
+    secrets:
+      - db_root_password
+      - db_user
+      - db_password
+
+volumes:
+  dbdata: {}
+
+secrets:
+  db_root_password:
+    external: true
+  db_user:
+    external: true
+  db_password:
+    external: true
