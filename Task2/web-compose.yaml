@@ -47,3 +47,6 @@ services:
     ports:
       - "3307:3307"
     restart: always
+
+networks:
+  appnet: {}
