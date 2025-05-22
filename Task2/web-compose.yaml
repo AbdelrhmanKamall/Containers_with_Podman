@@ -1,9 +1,9 @@
 services:
   wordpress1:
-    image: wordpress:latest
+    image: docker.io/library/wordpress:latest
     container_name: wordpress1
     environment:
-      WORDPRESS_DB_HOST: host.containers.internal
+      WORDPRESS_DB_HOST: 127.0.0.1
       WORDPRESS_DB_PORT: 3307
       WORDPRESS_DB_USER_FILE: /run/secrets/db_user
       WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
@@ -20,10 +20,10 @@ services:
       - db_password
 
   wordpress2:
-    image: wordpress:latest
+    image: docker.io/library/wordpress:latest
     container_name: wordpress2
     environment:
-      WORDPRESS_DB_HOST: host.containers.internal
+      WORDPRESS_DB_HOST: 127.0.0.1
       WORDPRESS_DB_PORT: 3307
       WORDPRESS_DB_USER_FILE: /run/secrets/db_user
       WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
@@ -40,13 +40,21 @@ services:
       - db_password
 
   mysql-proxy:
-    image: nginx
+    image: docker.io/library/nginx:latest
     container_name: mysql-proxy
     volumes:
       - ./reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "3307:3307"
     restart: always
+
+secrets:
+  db_user:
+    external: true
+  db_password:
+    external: true
+  db_root_password:
+    external: true
 
 networks:
   appnet: {}

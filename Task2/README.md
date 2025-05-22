@@ -9,3 +9,13 @@ cd ~/reverse-proxy
 vim nginx.conf
 ```
 and this will have the nginx.conf
+
+
+
+### 1. Create Required Secrets
+
+```bash
+echo "root" | podman secret create db_root_password -
+echo "user" | podman secret create db_user -
+echo "pass" | podman secret create db_password -
+```

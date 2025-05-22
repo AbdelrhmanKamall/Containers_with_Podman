@@ -1,6 +1,6 @@
 services:
   dbserver:
-    image: mysql:5.7
+    image: docker.io/library/mysql:5.7
     container_name: dbserver
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
@@ -9,6 +9,7 @@ services:
       MYSQL_PASSWORD_FILE: /run/secrets/db_password
     volumes:
       - dbdata:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf:ro
     secrets:
       - db_root_password
       - db_user
